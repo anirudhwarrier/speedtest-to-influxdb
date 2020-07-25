@@ -9,6 +9,11 @@ services:
       - influxdb-data:/var/lib/influxdb
     networks:
       - monitoring
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: '10m'
 
   grafana:
     image: grafana/grafana:latest
@@ -18,6 +23,11 @@ services:
       - grafana-data:/var/lib/grafana
     networks:
       - monitoring
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: '10m'
 
   speedtest-monitor:
     build:
