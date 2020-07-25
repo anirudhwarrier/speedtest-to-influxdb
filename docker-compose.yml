@@ -28,7 +28,7 @@ services:
       - INFLUX_DB_USER=user
       - INFLUX_DB_PASSWORD=password
       - INFLUX_DB_DATABASE=speedtest
-      - SPEEDTEST_INTERVAL=1800
+      - SPEEDTEST_INTERVAL=${SPEEDTEST_INTERVAL-1800}
       - SPEEDTEST_FAIL_INTERVAL=300
     networks:
       - monitoring
