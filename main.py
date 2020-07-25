@@ -29,7 +29,7 @@ def init_db():
     else:
         influxdb_client.switch_database(DB_DATABASE)  # Switch to if does exist.
 def pkt_loss(data):
-    if data['packetLoss']:
+    if 'packetLoss' in data:
         return data['packetLoss']
     else: 
         return 0
@@ -88,7 +88,7 @@ def main():
         if speedtest.returncode == 0:  # Speedtest was successful.
             data = format_for_influx(speedtest.stdout)
             print("Speedtest Successful:")
-            if influxdb_client.write_points(data) == True:
+            if influxdb_client.write_points(data, database=DB_DATABASE) == True:
                 print("Data written to DB successfully")
                 time.sleep(TEST_INTERVAL)
         else:  # Speedtest failed.
