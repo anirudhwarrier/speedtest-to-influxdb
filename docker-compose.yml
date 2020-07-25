@@ -1,29 +1,29 @@
 version: "3.8"
 services:
 
-  inflxdb-grafana:
-    image: philhawthorne/docker-influxdb-grafana:latest
-    ports:
-      - "3003:3003"
-      - "3004:8083"
-      - "8086:8086"
+  influxdb:
+    image: influxdb:latest
+    ports: 
+      - "8086"
     volumes:
       - influxdb-data:/var/lib/influxdb
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports: 
+      - "3003:3000"
+    volumes:
       - grafana-data:/var/lib/grafana
     networks:
       - monitoring
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: '5'
-        max-size: '10m'
 
   speedtest-monitor:
     build:
       context: .
     environment: 
-      - INFLUX_DB_ADDRESS=inflxdb-grafana
+      - INFLUX_DB_ADDRESS=influxdb
       - INFLUX_DB_PORT=8086
       - INFLUX_DB_USER=user
       - INFLUX_DB_PASSWORD=password
