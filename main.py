@@ -70,7 +70,7 @@ def format_for_influx(cliout):
             'measurement': 'packetLoss',
             'time': data['timestamp'],
             'fields': {
-                'packetLoss': pkt_loss(data)
+                'packetLoss': float(pkt_loss(data))
             }
         }
     ]
